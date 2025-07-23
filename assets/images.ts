@@ -1,0 +1,12 @@
+export const heroImage = 'https://github.com/VidYtai/StudySync/blob/main/assets/1.png?raw=true';
+export const timetableImage = 'https://github.com/VidYtai/StudySync/blob/main/assets/2.png?raw=true';
+export const todoImage = 'https://github.com/VidYtai/StudySync/blob/main/assets/3.png?raw=true';
+export const pomodoroImage = 'https://github.com/VidYtai/StudySync/blob/main/assets/4.png?raw=true';
+export const studyRoomImage = 'https://github.com/VidYtai/StudySync/blob/main/assets/5.png?raw=true';
+export const authBackgroundImage = 'https://github.com/VidYtai/StudySync/blob/main/assets/6.png?raw=true';
+export const emptyTodoImage = 'https://github.com/VidYtai/StudySync/blob/main/assets/7.png?raw=true';
+export const emptyRemindersImage = 'https://github.com/VidYtai/StudySync/blob/main/assets/8.png?raw=true';
+export const morningImage = 'https://github.com/VidYtai/StudySync/blob/main/assets/9.png?raw=true';
+export const afternoonImage = 'https://github.com/VidYtai/StudySync/blob/main/assets/10.png?raw=true';
+export const eveningImage = 'https://github.com/VidYtai/StudySync/blob/main/assets/11.png?raw=true';
+export const defaultAvatarImage = `data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3e%3cdefs%3e%3clinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3e%3cstop offset='0%25' style='stop-color:%235033FF;stop-opacity:1' /%3e%3cstop offset='100%25' style='stop-color:%23E545A3;stop-opacity:1' /%3e%3c/linearGradient%3e%3c/defs%3e%3ccircle cx='50' cy='50' r='50' fill='url(%23g)'/%3e%3c/svg%3e`;
