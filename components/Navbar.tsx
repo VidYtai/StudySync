@@ -51,12 +51,12 @@ const Navbar: React.FC = () => {
             setIsMenuOpen(false);
         }
 
-        // Toggle user menu. If mobile menu was open, delay the opening.
+        
         if (isUserMenuOpen) {
             setIsUserMenuOpen(false);
         } else {
             if (wasMobileMenuOpen) {
-                setTimeout(() => setIsUserMenuOpen(true), 300); // Animation duration
+                setTimeout(() => setIsUserMenuOpen(true), 300); 
             } else {
                 setIsUserMenuOpen(true);
             }
@@ -64,13 +64,13 @@ const Navbar: React.FC = () => {
     };
 
     const handleMobileMenuToggle = () => {
-        // If we are about to open the mobile menu, first ensure the user dropdown is closed.
+        
         if (!isMenuOpen) {
             if (isUserMenuOpen) {
                 setIsUserMenuOpen(false);
             }
         }
-        // Then, toggle the mobile menu's state.
+        
         setIsMenuOpen(prev => !prev);
     };
 
@@ -79,29 +79,29 @@ const Navbar: React.FC = () => {
         navigate('/');
     };
     
-    // Effect to handle exit animation for user menu
+    
     useEffect(() => {
         if (isUserMenuOpen) {
             setIsUserMenuRendered(true);
         } else {
-            // Delay unmounting to allow for exit animation
-            const timer = setTimeout(() => setIsUserMenuRendered(false), 200); // Match 'animate-scale-out' duration
+            
+            const timer = setTimeout(() => setIsUserMenuRendered(false), 200); 
             return () => clearTimeout(timer);
         }
     }, [isUserMenuOpen]);
     
-    // Effect to handle exit animation for mobile menu
+    
     useEffect(() => {
         if (isMenuOpen) {
             setIsMobileMenuRendered(true);
         } else {
-            // Delay unmounting to allow for exit animation
-            const timer = setTimeout(() => setIsMobileMenuRendered(false), 300); // Match animation duration
+            
+            const timer = setTimeout(() => setIsMobileMenuRendered(false), 300); 
             return () => clearTimeout(timer);
         }
     }, [isMenuOpen]);
 
-    // Effect to handle clicks outside the user menu
+    
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
