@@ -14,10 +14,10 @@ interface TimetableConfig {
   endHour: number;
 }
 
-const ROW_HEIGHT_PER_HOUR = 96; // Corresponds to h-24 in Tailwind
+const ROW_HEIGHT_PER_HOUR = 96; 
 
 const getToday = () => {
-    const dayIndex = new Date().getDay(); // Sunday = 0, Monday = 1...
+    const dayIndex = new Date().getDay(); 
     const adjustedIndex = dayIndex === 0 ? 6 : dayIndex - 1;
     return DAYS_OF_WEEK[adjustedIndex];
 }
@@ -33,11 +33,11 @@ const EventForm: React.FC<EventFormProps> = ({ event, onSave, onDelete, eventCat
     const [currentEvent, setCurrentEvent] = useState(event);
     const [newItemText, setNewItemText] = useState("");
     const [isGenerating, setIsGenerating] = useState(false);
-    const [isNewEvent] = useState(!event.title.trim()); // Check if it's a new event
+    const [isNewEvent] = useState(!event.title.trim()); 
 
     useEffect(() => {
-        // If the current event's category does not exist in the available categories,
-        // default it to the first available category to prevent a broken state.
+        
+        
         if (!eventCategories.some(c => c.name === currentEvent.category)) {
             setCurrentEvent(prev => ({...prev, category: eventCategories[0]?.name || 'Other'}));
         }
@@ -197,7 +197,7 @@ const TimetablePage: React.FC = () => {
   const wasModalOpenedByTutorial = useRef(false);
   const prevIsPromptActive = useRef(isPromptActive);
   
-  // One-time migration for old event structure (with `color`) to new one (with `category`)
+  
   useEffect(() => {
     const needsMigration = events.some(e => e && typeof (e as any).color !== 'undefined' && typeof e.category === 'undefined');
 
@@ -214,12 +214,12 @@ const TimetablePage: React.FC = () => {
         });
         setEvents(migratedEvents);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Run only on mount.
+    
+  }, []); 
 
 
   useEffect(() => {
-    // If tutorial was active and is now inactive, ensure modal is closed
+    
     if (prevIsPromptActive.current && !isPromptActive && wasModalOpenedByTutorial.current) {
         setIsModalOpen(false);
         wasModalOpenedByTutorial.current = false;
@@ -258,10 +258,10 @@ const TimetablePage: React.FC = () => {
   };
   
   const handleSaveAndProceedTutorial = () => {
-    // A function to be called from the tutorial action
-    // to simulate saving and then proceed.
+    
+    
     if (editingEvent) {
-        // A "fake" save to show it on the timetable if needed, but we might just close it.
+        
         const eventToSave = {
             ...editingEvent, 
             title: editingEvent.title || "My First Event",
@@ -322,7 +322,7 @@ const TimetablePage: React.FC = () => {
         content: "Once you're done, save the event, and it will appear on your timetable.",
         placement: 'top',
         action: () => {
-            // Keep the modal open for this step
+            
         },
     },
     {
@@ -333,9 +333,9 @@ const TimetablePage: React.FC = () => {
         desktopOnly: true,
         nextPath: '/app/todo',
         action: () => {
-            // We only close the modal if the tutorial initiated it.
+            
             if (wasModalOpenedByTutorial.current) {
-                // To make it feel real, we'll "save" a sample event if the user didn't type anything.
+                
                 const event = editingEvent ?? {
                     id: crypto.randomUUID(),
                     day: view === 'day' ? selectedDay : DAYS_OF_WEEK[0],
@@ -410,7 +410,7 @@ const TimetablePage: React.FC = () => {
       setTimeout(() => {
           setEvents(prevEvents => prevEvents.filter(e => e.id !== eventId));
           setEventsToAnimateOut(prev => prev.filter(id => id !== eventId));
-      }, 300); // Corresponds to animation duration
+      }, 300); 
   };
 
   const eventsByDay = useMemo(() => {
