@@ -28,17 +28,16 @@ export interface TimetableSlot {
   startTime: string;
   endTime: string;
   title: string;
-  category: string; // The NAME of the category
+  category: string; 
   items: ChecklistItem[];
 }
 
 export interface AIPersona {
   id:string;
   name: string;
-  behavior: string; // This will be the system instruction for the AI
-  avatar?: string; // Base64 URL for the generated avatar image
+  behavior: string; 
   isDefault?: boolean;
-  ownerId?: string; // ID of the user who created it
+  ownerId?: string; 
 }
 
 
@@ -57,7 +56,7 @@ export interface ChatMessage {
     text: string;
     senderId: string;
     senderName: string;
-    timestamp: string; // ISO 8601 string
+    timestamp: string; 
 }
 
 export interface User {

@@ -2,23 +2,22 @@ import { AIPersona, EventCategory } from './types';
 
 export const DAYS_OF_WEEK = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
-// A vibrant, cohesive color palette for events based on a blue-to-pink gradient.
 export const EVENT_COLORS = [
-    '#5033FF', // Vibrant Blue
-    '#7A38D4', // Purple
-    '#A43CAF', // Magenta
-    '#CE4189', // Rose
-    '#E545A3', // Hot Pink
-    '#94A3B8', // Grey
+    '#3B82F6', 
+    '#2563EB', 
+    '#60A5FA', 
+    '#93C5FD', 
+    '#BFDBFE', 
+    '#A0A0A7', 
 ];
 
 export const EVENT_CATEGORIES: EventCategory[] = [
-    { id: 'cat-1', name: 'Study', color: '#5033FF' },
-    { id: 'cat-2', name: 'Class', color: '#7A38D4' },
-    { id: 'cat-3', name: 'Meeting', color: '#A43CAF' },
-    { id: 'cat-4', name: 'Workout', color: '#CE4189' },
-    { id: 'cat-5', name: 'Break', color: '#E545A3' },
-    { id: 'cat-6', name: 'Other', color: '#94A3B8' },
+    { id: 'cat-1', name: 'Study', color: '#3B82F6' },
+    { id: 'cat-2', name: 'Class', color: '#2563EB' },
+    { id: 'cat-3', name: 'Meeting', color: '#60A5FA' },
+    { id: 'cat-4', name: 'Workout', color: '#93C5FD' },
+    { id: 'cat-5', name: 'Break', color: '#BFDBFE' },
+    { id: 'cat-6', name: 'Other', color: '#A0A0A7' },
 ];
 
 

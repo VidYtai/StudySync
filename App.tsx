@@ -1,6 +1,6 @@
 
 import React, { useEffect } from 'react';
-import { HashRouter, Routes, Route, useLocation, Navigate, Outlet } from 'react-router';
+import { HashRouter, Routes, Route, useLocation, Navigate, Outlet } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { TimerProvider } from './contexts/TimerContext';
 import { TutorialProvider } from './contexts/TutorialContext';
@@ -27,7 +27,7 @@ const ScrollToTop = (): null => {
 
 const ProtectedRoute: React.FC = () => {
     const { user } = useAuth();
-    // A real app might have a loading state here
+    
     return user ? <Outlet /> : <Navigate to="/login" replace />;
 };
 
