@@ -360,8 +360,7 @@ const AISettings = () => {
     }, [allAIPersonas, user]);
     
     const handleSave = () => {
-        // This is a controlled component with useLocalStorage, so saving is automatic.
-        // We just show a message.
+
         setMessage('AI settings saved!');
         setTimeout(() => setMessage(''), 3000);
     };
@@ -448,7 +447,7 @@ const SettingsPage: React.FC = () => {
         content: "This is where you can customize every aspect of StudySync to fit your personal workflow. Let's look at the options.",
         placement: 'right'
     },
-    // Account section
+    
     {
         selector: '#settings-tab-account',
         title: 'Account Settings',
@@ -474,7 +473,7 @@ const SettingsPage: React.FC = () => {
         content: 'Update your security question and answer here. This is used for password recovery.',
         placement: 'bottom',
     },
-    // Timer Section
+    
     {
         selector: '#settings-tab-timer',
         title: 'Timer Settings',
@@ -488,7 +487,7 @@ const SettingsPage: React.FC = () => {
         content: 'Fine-tune the length of your work sprints and breaks to match your personal rhythm and maximize focus.',
         placement: 'bottom',
     },
-    // Timetable Section
+    
     {
         selector: '#settings-tab-timetable',
         title: 'Timetable Settings',
@@ -502,7 +501,7 @@ const SettingsPage: React.FC = () => {
         content: 'Customize the visible hours and manage event categories for better visual organization. This is great for seeing your week at a glance.',
         placement: 'bottom',
     },
-    // AI Section
+    
     {
         selector: '#settings-tab-ai',
         title: 'AI Settings',
@@ -516,7 +515,7 @@ const SettingsPage: React.FC = () => {
         content: "Here you can select a default AI partner and even customize the prompts StudySync uses to generate suggestions, tailoring the AI's behavior to your needs.",
         placement: isDesktop ? 'bottom' : 'left',
     },
-    // Finish
+    
     {
         selector: '#nav-link-settings',
         title: 'Tour Complete!',
