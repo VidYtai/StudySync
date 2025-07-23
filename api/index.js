@@ -7,20 +7,20 @@ const path = require('path');
 const db = require('./db');
 
 const app = express();
-const port = 3001; // Port for the backend server
+const port = 3001; 
 
-// --- Middleware Setup ---
+
 app.use(cors({
-  origin: 'http://localhost:3000', // Adjust for your frontend URL in development
+  origin: 'http:
   credentials: true,
 }));
 app.use(bodyParser.json());
 app.use(session({
   store: new FileStore({ path: path.join(__dirname, '../../sessions'), logFn: function(){} }),
-  secret: 'a-super-secret-key-for-studysync', // In production, use an env variable
+  secret: 'a-super-secret-key-for-studysync', 
   resave: false,
   saveUninitialized: false,
-  cookie: { httpOnly: true, secure: false, maxAge: 1000 * 60 * 60 * 24 * 7 } // 1 week
+  cookie: { httpOnly: true, secure: false, maxAge: 1000 * 60 * 60 * 24 * 7 } 
 }));
 
 const authGuard = (req, res, next) => {
@@ -30,9 +30,9 @@ const authGuard = (req, res, next) => {
     next();
 };
 
-// --- Routes ---
 
-// Auth Routes
+
+
 const authRouter = express.Router();
 
 authRouter.post('/signup', async (req, res) => {
@@ -126,7 +126,7 @@ authRouter.post('/reset-password', async (req, res) => {
 
 app.use('/api/auth', authRouter);
 
-// User search
+
 app.get('/api/users', authGuard, async (req, res) => {
     const { name, id } = req.query;
     const users = await db.getUsers();
@@ -146,7 +146,7 @@ app.get('/api/users', authGuard, async (req, res) => {
 });
 
 
-// Study Room Routes
+
 const studyRoomRouter = express.Router();
 studyRoomRouter.use(authGuard);
 
@@ -198,7 +198,7 @@ studyRoomRouter.post('/:id/leave', async (req, res) => {
     if (roomIndex > -1) {
         rooms[roomIndex].memberIds = rooms[roomIndex].memberIds.filter(id => id !== req.session.user.id);
         if (rooms[roomIndex].memberIds.length === 0) {
-            // Delete room and its messages
+            
             rooms.splice(roomIndex, 1);
             messages = messages.filter(m => m.roomId !== req.params.id);
             await db.saveMessages(messages);
@@ -208,7 +208,7 @@ studyRoomRouter.post('/:id/leave', async (req, res) => {
     res.status(200).json({ message: 'Left room' });
 });
 
-// Messages
+
 studyRoomRouter.get('/:roomId/data', async(req, res) => {
     const { roomId } = req.params;
     const [messages, rooms, users] = await Promise.all([db.getMessages(), db.getRooms(), db.getUsers()]);
@@ -242,7 +242,7 @@ studyRoomRouter.post('/:roomId/messages', async (req, res) => {
     res.status(201).json(newMessage);
 });
 
-// Invites
+
 studyRoomRouter.get('/invites', async (req, res) => {
     const allInvites = await db.getInvites();
     const userInvites = allInvites.filter(i => i.inviteeId === req.session.user.id && i.status === 'pending');
@@ -314,8 +314,8 @@ studyRoomRouter.post('/invites/:inviteId/decline', async (req, res) => {
 
 app.use('/api/study-rooms', studyRoomRouter);
 
-// Fallback for serving frontend (optional, depending on setup)
-// In a real setup, a reverse proxy like Nginx would handle this.
+
+
 if (process.env.NODE_ENV !== 'development') {
     app.use(express.static(path.join(__dirname, '../..')));
     app.get('*', (req, res) => {
@@ -326,9 +326,9 @@ if (process.env.NODE_ENV !== 'development') {
 
 if (process.env.NODE_ENV === 'development') {
     app.listen(port, () => {
-      console.log(`Backend server listening on http://localhost:${port}`);
+      console.log(`Backend server listening on http:
     });
 }
 
-// Export the app for serverless environments
+
 module.exports = app;
