@@ -22,30 +22,30 @@ const TutorialPrompt: React.FC = () => {
     const popoverRef = useRef<HTMLDivElement>(null);
     const location = useLocation();
 
-    // State to manage rendering and animations for smooth exit
+    
     const [isRendered, setIsRendered] = useState(false);
     const [isAnimating, setIsAnimating] = useState(false);
 
-    // Effect to control rendering and animation state for smooth entry/exit
+    
     useEffect(() => {
         if (isPromptActive) {
             setIsRendered(true);
-            const timer = setTimeout(() => setIsAnimating(true), 10); // Start animation after render
+            const timer = setTimeout(() => setIsAnimating(true), 10); 
             return () => clearTimeout(timer);
         } else {
             setIsAnimating(false);
-            const timer = setTimeout(() => setIsRendered(false), 500); // Unmount after animation
+            const timer = setTimeout(() => setIsRendered(false), 500); 
             return () => clearTimeout(timer);
         }
     }, [isPromptActive]);
 
-    // Recalculates and sets the position of the popover and its arrow.
+    
     const updatePosition = () => {
         if (!activeStep || !popoverRef.current) return;
 
         const PADDING = 16;
         const ARROW_SIZE = 12;
-        const POPOVER_WIDTH = 288; // w-72
+        const POPOVER_WIDTH = 288; 
 
         const element = activeStep.selector ? document.querySelector(activeStep.selector) : null;
         const tBox = element ? element.getBoundingClientRect() : null;
@@ -67,7 +67,7 @@ const TutorialPrompt: React.FC = () => {
 
         const popoverHeight = popoverRef.current.offsetHeight;
 
-        // Auto-placement logic
+        
         let finalPlacement = activeStep.placement || 'bottom';
         const canPlace = {
             top: tBox.top - popoverHeight - PADDING > 0,
@@ -76,7 +76,7 @@ const TutorialPrompt: React.FC = () => {
             right: tBox.right + POPOVER_WIDTH + PADDING < window.innerWidth
         };
         
-        // Improve placement by flipping if the desired side has no space.
+        
         if (finalPlacement === 'top' && !canPlace.top) {
             finalPlacement = 'bottom';
         } else if (finalPlacement === 'bottom' && !canPlace.bottom) {
@@ -122,18 +122,18 @@ const TutorialPrompt: React.FC = () => {
                 break;
         }
 
-        // Boundary checks to clamp the popover within the viewport
+        
         if (idealLeft < PADDING) idealLeft = PADDING;
         if (idealLeft + POPOVER_WIDTH > window.innerWidth - PADDING) idealLeft = window.innerWidth - POPOVER_WIDTH - PADDING;
         
         if (idealTop < PADDING) idealTop = PADDING;
         if (idealTop + popoverHeight > window.innerHeight - PADDING) idealTop = window.innerHeight - popoverHeight - PADDING;
 
-        // Recalculate arrow position based on the final, clamped popover position
+        
         if (finalPlacement === 'top' || finalPlacement === 'bottom') {
             arrowLeft = tBox.left + tBox.width / 2 - idealLeft - ARROW_SIZE / 2;
             arrowLeft = Math.max(ARROW_SIZE, Math.min(arrowLeft, POPOVER_WIDTH - ARROW_SIZE * 2));
-        } else { // left or right
+        } else { 
             arrowTop = tBox.top + tBox.height / 2 - idealTop - ARROW_SIZE / 2;
             arrowTop = Math.max(ARROW_SIZE, Math.min(arrowTop, popoverHeight - ARROW_SIZE * 2));
         }
@@ -186,7 +186,7 @@ const TutorialPrompt: React.FC = () => {
         timeout = setTimeout(() => {
             clearInterval(poller);
             console.warn("Tutorial target element not found:", activeStep.selector);
-            setTargetBox(null); // Fallback to non-highlighted mode
+            setTargetBox(null); 
             setupPositioning();
         }, 3000);
 
@@ -198,7 +198,7 @@ const TutorialPrompt: React.FC = () => {
         };
     }, [isPromptActive, activeStep, location.pathname]);
     
-    // This effect ensures that if the content of the popover changes (and thus its height), we re-run positioning.
+    
     useLayoutEffect(() => {
         if (popoverRef.current) {
             updatePosition();
