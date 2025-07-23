@@ -8,16 +8,16 @@ export interface TutorialStepConfig {
   selector: string;
   title: string;
   content: string;
-  path?: string; // Optional, can be used for automated navigation
+  path?: string; 
   placement?: 'top' | 'bottom' | 'left' | 'right' | 'center';
-  action?: () => void; // Action to perform when this step starts
-  desktopOnly?: boolean; // If true, this step will only show on larger screens
-  mobileOnly?: boolean; // If true, this step will only show on smaller screens
-  isWelcome?: boolean; // If true, displays a larger, introductory modal
+  action?: () => void; 
+  desktopOnly?: boolean; 
+  mobileOnly?: boolean; 
+  isWelcome?: boolean; 
   nextPath?: string;
 }
 
-// The features we are tracking for the tutorial.
+
 export type TutorialFeature = 'dashboard' | 'timetable' | 'todo' | 'reminders' | 'studyRoomJoin' | 'studyRoomCreate' | 'studyRoomInRoom' | 'settings';
 
 type TutorialProgress = Record<TutorialFeature, 'unseen' | 'seen'>;
@@ -34,12 +34,12 @@ const INITIAL_PROGRESS: TutorialProgress = {
 };
 
 interface TutorialContextType {
-  // State for the prompt component to read
+  
   isPromptActive: boolean;
   activeStep: TutorialStepConfig | null;
   isLastStep: boolean;
   
-  // Functions for components to call
+  
   tutorialProgress: TutorialProgress;
   startTutorial: (feature: TutorialFeature, steps: TutorialStepConfig[]) => void;
   nextStep: () => void;
@@ -68,7 +68,7 @@ export const TutorialProvider: React.FC<{ children: ReactNode }> = ({ children }
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Initialize for new users
+  
   useEffect(() => {
     const isNewUser = sessionStorage.getItem('isNewUser');
     if (isNewUser && user) {
@@ -90,7 +90,7 @@ export const TutorialProvider: React.FC<{ children: ReactNode }> = ({ children }
     setActiveStepIndex(0);
   }, [activeFeature, setTutorialProgress]);
 
-  // Handle resizing mid-tutorial. If the current step becomes invalid, end the tour.
+  
   useEffect(() => {
       if (!activeStep) return;
       const isInvalidNow = (activeStep.desktopOnly && !isDesktop) || (activeStep.mobileOnly && isDesktop);
@@ -101,16 +101,16 @@ export const TutorialProvider: React.FC<{ children: ReactNode }> = ({ children }
 
 
   const startTutorial = useCallback((feature: TutorialFeature, steps: TutorialStepConfig[]) => {
-    // Only start if the feature hasn't been seen and no other tutorial is active
+    
     if (tutorialProgress[feature] === 'unseen' && !isPromptActive) {
-      // Filter out steps based on screen size
+      
       const filteredSteps = steps.filter(step => {
         if (step.desktopOnly && !isDesktop) return false;
         if (step.mobileOnly && isDesktop) return false;
         return true;
       });
 
-      // If all steps were filtered out, just mark the feature as seen and do nothing.
+      
       if (filteredSteps.length === 0) {
           setTutorialProgress(prev => ({ ...prev, [feature]: 'seen' }));
           return;
@@ -143,7 +143,7 @@ export const TutorialProvider: React.FC<{ children: ReactNode }> = ({ children }
     endCurrentTutorial(false);
   }, [setTutorialProgress, endCurrentTutorial]);
   
-  // Effect to navigate or perform actions when a new step becomes active
+  
   useEffect(() => {
     if (!activeStep) return;
 
