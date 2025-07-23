@@ -5,8 +5,6 @@ import { Reminder } from '../types';
 import { TrashIcon, BellIcon } from '../components/icons';
 import { useAuth } from '../contexts/AuthContext';
 import { useTutorial, TutorialStepConfig } from '../contexts/TutorialContext';
-import EmptyState from '../components/EmptyState';
-import { emptyRemindersImage } from '../assets/images';
 
 const remindersTutorialSteps: TutorialStepConfig[] = [
     {
@@ -50,7 +48,7 @@ const RemindersPage: React.FC = () => {
   const [title, setTitle] = useState('');
   const [datetime, setDatetime] = useState('');
   const [notificationPermission, setNotificationPermission] = useState(Notification.permission);
-  const [, setForceUpdate] = useState(0); // Used to force re-renders for time-sensitive UI
+  const [, setForceUpdate] = useState(0); 
 
   useEffect(() => {
     if (tutorialProgress.reminders === 'unseen') {
@@ -61,23 +59,23 @@ const RemindersPage: React.FC = () => {
     }
   }, [tutorialProgress, startTutorial]);
 
-  // This effect runs every minute to re-render the component,
-  // ensuring that reminders correctly move from "Upcoming" to "Past" as time passes.
+  
+  
   useEffect(() => {
     const interval = setInterval(() => {
       setForceUpdate(tick => tick + 1);
-    }, 60000); // every minute
+    }, 60000); 
     return () => clearInterval(interval);
   }, []);
 
-  // This effect runs once on mount to clean up any reminders older than 7 days.
+  
   useEffect(() => {
     const sevenDaysAgo = new Date().getTime() - 7 * 24 * 60 * 60 * 1000;
     const recentReminders = reminders.filter(r => new Date(r.datetime).getTime() >= sevenDaysAgo);
     if (recentReminders.length < reminders.length) {
       setReminders(recentReminders);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, []);
 
 
@@ -86,30 +84,11 @@ const RemindersPage: React.FC = () => {
       alert('This browser does not support desktop notification');
       return;
     }
-
-    // Explicitly handle the case where permission is already denied, as some browsers
-    // won't show a prompt and just resolve the promise immediately.
-    if (Notification.permission === 'denied') {
-      alert("Notifications are blocked. To enable them, please go to your browser's site settings.");
-      // We can also update our state just in case it was out of sync.
-      setNotificationPermission('denied');
-      return;
-    }
-
     try {
-      // The promise-based API is standard.
       const permission = await Notification.requestPermission();
-      
-      // Update the state with the user's choice.
       setNotificationPermission(permission);
-
-      // Provide feedback if the user explicitly denies the request.
-      if (permission === 'denied') {
-        alert("You've chosen to block notifications. You can change this in your browser's site settings if you change your mind.");
-      }
     } catch (error) {
       console.error('Error requesting notification permission:', error);
-      alert('An error occurred while requesting notification permissions. This might be due to your browser or site settings.');
     }
   };
 
@@ -126,13 +105,13 @@ const RemindersPage: React.FC = () => {
           if (Notification.permission === 'granted') {
             new Notification('StudySync Reminder', {
               body: reminder.title,
-              icon: "data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>",
+              icon: "data:image/svg+xml,<svg xmlns=%22http:
               tag: reminder.id,
             });
           } else {
             alert(`Reminder: ${reminder.title}`);
           }
-          // Force a re-render to move the reminder to the "Past" list
+          
           setForceUpdate(tick => tick + 1);
         }, delay);
         activeTimeouts.push(timeoutId);
@@ -192,7 +171,7 @@ const RemindersPage: React.FC = () => {
              </div>
         );
     }
-    return <div id="notification-banner" className="hidden"></div>; // Hidden div to serve as a tutorial target if permissions are already granted
+    return <div id="notification-banner" className="hidden"></div>; 
   };
 
   return (
@@ -248,11 +227,9 @@ const RemindersPage: React.FC = () => {
             ))}
           </ul>
         ) : (
-          <EmptyState
-            image={emptyRemindersImage}
-            title="No Upcoming Reminders"
-            description="You're all caught up! Set a new reminder above to stay on top of your deadlines."
-          />
+          <div className="text-center py-12 glass-pane">
+            <p className="text-text-secondary italic">You have no upcoming reminders.</p>
+          </div>
         )}
       </div>
 
