@@ -235,7 +235,7 @@ const AIManagementModal: React.FC<{
             return;
         }
         
-        // If we deleted the AI we were editing, reset the form.
+        
         if (editingAI?.id === idToDelete) {
             handleNew();
         }
@@ -362,7 +362,7 @@ const StudyRoomPage: React.FC = () => {
     
     let steps: TutorialStepConfig[] = [];
 
-    // Step 1: Welcome to chat
+    
     steps.push({
         selector: '#chat-window',
         title: 'Your Private Study Room',
@@ -370,9 +370,9 @@ const StudyRoomPage: React.FC = () => {
         placement: 'right'
     });
 
-    // Step 2: Highlight the new AI
+    
     if (firstAiInRoom) {
-        // Desktop version
+        
         steps.push({
             selector: `#participant-${firstAiInRoom.id}`,
             title: 'Your AI Assistant',
@@ -380,7 +380,7 @@ const StudyRoomPage: React.FC = () => {
             placement: 'left',
             desktopOnly: true,
         });
-        // Mobile version (2 parts)
+        
         steps.push({
              selector: `#invite-ais-button`,
              title: 'Your AI Assistant',
@@ -403,7 +403,7 @@ const StudyRoomPage: React.FC = () => {
         });
     }
 
-    // --- DESKTOP PATH (Continued) ---
+    
     steps.push({
         selector: '#invite-ai-section',
         title: 'Invite More AIs',
@@ -418,7 +418,7 @@ const StudyRoomPage: React.FC = () => {
         placement: 'left',
         desktopOnly: true,
     },
-    // --- MOBILE PATH (Continued) ---
+    
     {
         selector: '#invite-ai-section',
         title: 'Invite More AIs',
@@ -433,7 +433,7 @@ const StudyRoomPage: React.FC = () => {
         placement: 'top',
         mobileOnly: true,
     },
-    // --- COMMON PATH (continued) ---
+    
     {
         selector: '#create-new-ai-form',
         title: 'Create a Persona',
@@ -465,7 +465,7 @@ const StudyRoomPage: React.FC = () => {
         action: () => {
             const userMenuButton = document.getElementById('user-menu-button');
             const settingsLink = document.getElementById('nav-link-settings');
-            // If the settings link is not in the DOM, the menu is closed. Click to open it.
+            
             if (userMenuButton && !settingsLink) {
                 userMenuButton.click();
             }
@@ -512,7 +512,7 @@ const StudyRoomPage: React.FC = () => {
     if (tutorialProgress.studyRoomInRoom === 'unseen' && currentRoom) {
       const timer = setTimeout(() => {
         startTutorial('studyRoomInRoom', inRoomTutorialSteps);
-      }, 500); // Increased delay to allow participants to load
+      }, 500); 
       return () => clearTimeout(timer);
     }
   }, [tutorialProgress, startTutorial, currentRoom, inRoomTutorialSteps]);
@@ -552,7 +552,7 @@ const StudyRoomPage: React.FC = () => {
       return;
     }
 
-    // No password check needed to join a room.
+    
 
     let roomWithCurrentUser = roomToJoin;
     if (!roomToJoin.memberIds.includes(user!.id)) {
@@ -567,7 +567,7 @@ const StudyRoomPage: React.FC = () => {
     }
 
     setCurrentRoom(roomWithCurrentUser);
-    setPasswordInput(''); // Clear password field if user was on create view before.
+    setPasswordInput(''); 
   };
 
   const handleCreateRoom = async (e: React.FormEvent) => {
@@ -581,21 +581,21 @@ const StudyRoomPage: React.FC = () => {
     
     let initialAiMemberIds: string[] = [];
     
-    // Priority 1: Use the user's explicit default AI setting
+    
     if (defaultAIId && allAIPersonas.some(p => p.id === defaultAIId)) {
         initialAiMemberIds.push(defaultAIId);
     } 
-    // Priority 2: If only one AI exists in total, that's the implicit default
+    
     else if (allAIPersonas.length === 1) {
         initialAiMemberIds.push(allAIPersonas[0].id);
     }
-    // Priority 3: Fallback to the first available original default AI persona
+    
     else {
         const firstOriginalDefault = allAIPersonas.find(p => p.id === DEFAULT_AI_PERSONAS[0]?.id);
         if (firstOriginalDefault) {
             initialAiMemberIds.push(firstOriginalDefault.id);
         } 
-        // Priority 4: If all else fails, just grab the first AI from the list
+        
         else if (allAIPersonas.length > 0) {
              initialAiMemberIds.push(allAIPersonas[0].id);
         }
@@ -621,7 +621,7 @@ const StudyRoomPage: React.FC = () => {
             return { ...room, memberIds: room.memberIds.filter(id => id !== user!.id) };
         }
         return room;
-    }).filter(room => room.memberIds.length > 0 || room.ownerId === user?.id); // Keep room if owner leaves but others are in
+    }).filter(room => room.memberIds.length > 0 || room.ownerId === user?.id); 
 
     setRooms(updatedRooms);
     setCurrentRoom(null);
@@ -708,11 +708,11 @@ const StudyRoomPage: React.FC = () => {
     e.preventDefault();
     if (newMessage.trim() === '' || !currentRoom || isSending) return;
 
-    // Set isSending to true to disable the send button and prevent multiple submissions.
+    
     setIsSending(true);
 
     const textToSend = newMessage;
-    setNewMessage(''); // Clear input immediately for better UX
+    setNewMessage(''); 
 
     const message: ChatMessage = {
         id: crypto.randomUUID(),
@@ -725,12 +725,12 @@ const StudyRoomPage: React.FC = () => {
     
     setMessages(prev => [...prev, message]);
     
-    // Refocus the input field immediately. Since the input is not disabled, it can receive focus.
+    
     messageInputRef.current?.focus();
 
-    // Trigger AI responses in the background. We don't await it, so the UI remains responsive.
+    
     triggerAIResponses(message).finally(() => {
-        // Once the AI has finished responding, re-enable the send button.
+        
         setIsSending(false);
     });
   };
@@ -745,7 +745,7 @@ const StudyRoomPage: React.FC = () => {
   const removeAIFromRoom = (aiId: string) => {
       if (!currentRoom) return;
       
-      // Clear any previous error messages.
+      
       setParticipantsError('');
   
       if (currentRoom.aiMemberIds.length > 1) {
@@ -755,11 +755,11 @@ const StudyRoomPage: React.FC = () => {
           return;
       }
       
-      // This logic runs when trying to remove the last AI from the room.
+      
       const replacementCandidates = allAIPersonas.filter(p => p.id !== aiId);
       if (replacementCandidates.length === 0) {
-          // If there are no other AIs in the system to act as a replacement,
-          // prevent the removal and show an error.
+          
+          
           setParticipantsError("You must keep at least one AI in the room. No replacements are available.");
           setTimeout(() => setParticipantsError(''), 4000);
           return;
@@ -782,7 +782,7 @@ const StudyRoomPage: React.FC = () => {
           setCurrentRoom(updatedRoom);
           setRooms(rooms.map(r => r.id === updatedRoom.id ? updatedRoom : r));
       } else {
-        // This case should not be reached if replacementCandidates.length > 0, but as a fallback:
+        
         setParticipantsError("Could not find a suitable AI to replace the last one.");
         setTimeout(() => setParticipantsError(''), 4000);
       }
@@ -790,7 +790,7 @@ const StudyRoomPage: React.FC = () => {
 
   const handleDeleteAIPersona = (idToDelete: string): boolean => {
     if (allAIPersonas.length <= 1) {
-        return false; // Deletion not allowed
+        return false; 
     }
 
     const remainingPersonas = allAIPersonas.filter(p => p.id !== idToDelete);
@@ -840,7 +840,7 @@ const StudyRoomPage: React.FC = () => {
         setDefaultAI(remainingPersonas.length === 1 ? remainingPersonas[0].id : null);
     }
     
-    return true; // Success
+    return true; 
   };
   
   const defaultAIsFromState = allAIPersonas.filter(ai => ai.isDefault);
